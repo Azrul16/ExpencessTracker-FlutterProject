@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:practice/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
@@ -44,7 +42,7 @@ class _NewExpenseState extends State<NewExpense> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: Column(
+      child: ListView(
         children: [
           TextField(
             controller: _titleController,
@@ -88,6 +86,9 @@ class _NewExpenseState extends State<NewExpense> {
               )
             ],
           ),
+          const SizedBox(
+            height: 16,
+          ),
           Row(
             children: [
               DropdownButton(
@@ -110,16 +111,12 @@ class _NewExpenseState extends State<NewExpense> {
                 },
               ),
               const Spacer(),
-              const SizedBox(
-                height: 6,
-              ),
               TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 child: const Text('Cancel'),
               ),
-              const Spacer(),
               ElevatedButton(
                 onPressed: () {},
                 child: const Text('Save'),

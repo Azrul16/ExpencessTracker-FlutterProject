@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:practice/models/expense.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense({super.key, required this.onAddExpense});
+
+  final void Function(Expense expense) onAddExpense;
 
   @override
   State<NewExpense> createState() {
@@ -31,6 +33,45 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submitExpenseData() {
+    final enteredAmount = double.tryParse(_amountController.text);
+    final amountIsInvalid = enteredAmount == null || enteredAmount <= 0;
+    if (_titleController.text.trim().isEmpty ||
+        amountIsInvalid ||
+        _selectedDate == null) {
+      //Show the Empty messege
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Invalid Expness'),
+          content:
+              const Text('Please make sure to fill all the field on the form'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(ctx);
+              },
+              child: const Text('Try Again'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    //else statement
+    widget.onAddExpense(
+      Expense(
+        date: _selectedDate!,
+        title: _titleController.text,
+        ammount: enteredAmount,
+        category: _selectedCategory,
+      ),
+    );
+
+    Navigator.pop(context);
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -41,7 +82,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 48, 16, 16),
       child: ListView(
         children: [
           TextField(
@@ -118,7 +159,7 @@ class _NewExpenseState extends State<NewExpense> {
                 child: const Text('Cancel'),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _submitExpenseData,
                 child: const Text('Save'),
               ),
             ],

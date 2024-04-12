@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
+// ignore: non_constant_identifier_names
 final Formatter = DateFormat.yMd();
 
 const uuid = Uuid();
@@ -26,11 +27,10 @@ class Expense {
 
   final String id;
   final String title;
-  final double ammount;
+  final double? ammount;
   final DateTime date;
   final Category category;
 
-  
   // ignore: non_constant_identifier_names
   String get FormattedDate {
     return Formatter.format(date);

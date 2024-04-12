@@ -25,7 +25,7 @@ class ExpenseItem extends StatelessWidget {
             ),
             Row(
               children: [
-                Text('\$${expense.ammount.toStringAsFixed(2)}'),
+                Text('\$${expense.ammount?.toStringAsFixed(2)}'),
                 const Spacer(),
                 Row(
                   children: [
